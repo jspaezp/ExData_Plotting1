@@ -1,7 +1,14 @@
+## flots four particular graphs in on a single png file
+## every graph (plot) is defined as a separate funcion and then in the device
+## they are called one at a time to generate the png file
+
+
 opendata <- function() {  
       ## opens the data file in ""household_power_consumption.txt"" from the working 
       ## directory and assigns the appropiate data class to each collumn, 
-      ## merges en collumn 1 date and time
+      ## reads at fist the approximate position of the data of interest, then selects it
+      ## and saves in RAM only from 1/2/2007 to 2/2/2007
+      ## merges in collumn 1 date and time 
       
       dataclasses <- c("character","character","numeric","numeric","numeric",
                        "numeric","numeric","numeric","numeric")
@@ -17,12 +24,12 @@ opendata <- function() {
       return(data)
 }
 
-plot2 <- function() {
+plot2 <- function() {  ##comments in "plot2.R"
       plot(as.POSIXlt(data$date),data[,3],type = "l",xlab = "", 
       ylab ="Global Active Power")    
 }
 
-plot3 <- function () {
+plot3 <- function () {   ##comments in "plot3.R"
      plot(as.POSIXlt(data$date),data$Sub_metering_1,
            type = "n", xlab = "", ylab ="Energy sub metering")
       points(as.POSIXlt(data$date), data$Sub_metering_1, type = "l")
@@ -42,12 +49,12 @@ plot5 <- function() {
       ylab ="Global_reactive_power", xlab = "datatime")
 }
 
-data <- suppressWarnings(opendata())
+data <- suppressWarnings(opendata())  #generates data frame
 
 png("plot4.png")
-par(mfcol = c(2,2))
-plot2()
-plot3()
-plot4()
-plot5()
+par(mfcol = c(2,2))         #generates 2x2 "grid" for plots
+plot2()                     #plot on top left
+plot3()                     #plot on lower left
+plot4()                     #plot on upper right
+plot5()                     #plot on lower right
 dev.off()   

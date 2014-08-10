@@ -4,7 +4,9 @@
 opendata <- function() {  
       ## opens the data file in ""household_power_consumption.txt"" from the working 
       ## directory and assigns the appropiate data class to each collumn, 
-      ## merges en collumn 1 date and time
+      ## reads at fist the approximate position of the data of interest, then selects it
+      ## and returns only from 1/2/2007 to 2/2/2007
+      ## merges in collumn 1 date and time
       
       dataclasses <- c("character","character","numeric","numeric","numeric",
                        "numeric","numeric","numeric","numeric")
@@ -19,8 +21,13 @@ opendata <- function() {
       data$date <- posixdates
       return(data)
 }
+
+#this part generates the plot itself
+
 png("plot2.png")
-data <- suppressWarnings(opendata())
+data <- suppressWarnings(opendata())   #generates the data frame
 plot(as.POSIXlt(data$date),data[,3],type = "l",xlab = "", 
      ylab ="Global Active Power (kilowatts)")
-dev.off()      
+dev.off() 
+
+#generates the file directly (not seen in screen)

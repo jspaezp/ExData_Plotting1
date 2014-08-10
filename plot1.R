@@ -3,7 +3,9 @@
 
 opendata <- function() {  
       ## opens the data file in ""household_power_consumption.txt"" from the working 
-      ## directory and assigns the appropiate data class to each collumn, 
+      ## directory and assigns the appropiate data class to each collumn.
+      ## reads at fist the approximate position of the data of interest, then selects it
+      ## and saves in RAM only from 1/2/2007 to 2/2/2007
       
       dataclasses <- c("character","character","numeric","numeric","numeric",
                        "numeric","numeric","numeric","numeric")
@@ -16,9 +18,10 @@ opendata <- function() {
       wknd1 <- data.frame(data[(("1/2/2007" == data[,1])|("2/2/2007" == data[,1])),])
       return(wknd1)
 }
+#this part generates the plot itself
       png("plot1.png")
-      data <- suppressWarnings(opendata())
+      data <- suppressWarnings(opendata())      #suppressWarnings can be ommited
       hist(data[,3], col = "red", main = "Global Active Power",
-           xlab = "Global Active Power (kilowatts)")
+           xlab = "Global Active Power (kilowatts)")    
       dev.off()      
-
+#generates the file directly (not seen in screen)
